@@ -98,6 +98,9 @@ uint8_t PCA9685::setPWM(uint8_t num, uint16_t on, uint16_t off) {
   wire->write(off);
   wire->write(off>>8);
   wire->endTransmission();
+  #ifdef USE_WIRE_DELAY
+  delay(1);
+  #endif
 }
 
 /**************************************************************************/
@@ -147,6 +150,9 @@ uint8_t PCA9685::read(uint8_t addr) {
   wire->beginTransmission(pca9685_addr);
   wire->write(addr);
   wire->endTransmission();
+  #ifdef USE_WIRE_DELAY
+  delay(1);
+  #endif
   // Read from setting address register
   wire->requestFrom((uint8_t)pca9685_addr, (uint8_t)1);
   return wire->read();
@@ -158,4 +164,7 @@ uint8_t PCA9685::write(uint8_t addr, uint8_t value) {
   wire->write(addr);
   wire->write(value);
   wire->endTransmission();
+  #ifdef USE_WIRE_DELAY
+  delay(1);
+  #endif
 }
